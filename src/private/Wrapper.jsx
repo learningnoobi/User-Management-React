@@ -11,14 +11,11 @@ const Wrapper = (props) => {
     useEffect(() => {
         async function fetchUser() {
             try {
-                let response = await axios.get('/api/currentuser')
+                await axios.get('/api/currentuser')
                 // console.log(response)
             }
             catch {
-
                 setRedirect(true)
-
-
             }
         }
         fetchUser()

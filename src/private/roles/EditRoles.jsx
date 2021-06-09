@@ -1,12 +1,12 @@
-import { useParams } from "react-router-dom"
+import { useParams, useHistory } from "react-router-dom"
 import { useEffect, useState } from 'react'
 import axios from "axios"
-import { useHistory } from "react-router-dom"
 import Wrapper from "../Wrapper"
+
 const EditRoles = () => {
     const { id } = useParams()
     const [perm, setPerm] = useState([])
-    const [inputPerm, setInputPerm] = useState([])
+    let [inputPerm, setInputPerm] = useState([])
     const [roleName, setRoleName] = useState('')
     let history = useHistory()
 
@@ -32,19 +32,38 @@ const EditRoles = () => {
     }, [id])
 
     //MARK ALREADY GOT PERMISSIONS
-    const check = (id) => {
+
+
+    const isChecked = (id) => {
         if (inputPerm.includes(id)) {
             return true
-
         }
 
     }
+    const check = (id) => {
+
+        if (!inputPerm.includes(id)) {
+            setInputPerm([...inputPerm, id])
+        }
+
+        if (isChecked(id)) {
+            setInputPerm(inputPerm.filter(s => s !== id));
+
+        }
+    }
+
+
+
+
+
+
     const editRole = async (e) => {
         e.preventDefault()
         await axios.put(`api/roles/${id}/`, {
             name: roleName,
             permissions: inputPerm
         })
+        history.push('/roles')
         console.log('edited')
     }
     return (
@@ -67,9 +86,10 @@ const EditRoles = () => {
                             (p) => {
                                 return (
                                     <div className="form-check form-check-inline col-3" key={p.id}>
-                                        <input defaultChecked={check(p.id)}
+                                        <input defaultChecked={isChecked(p.id)}
                                             className="form-check-input" type="checkbox" value={p.id}
-                                            onChange={e => setInputPerm([...inputPerm, parseInt(e.target.value)])}
+                                            onChange={() => check(p.id)}
+                                        // onChange={e => setInputPerm([...inputPerm, parseInt(e.target.value)])}
                                         />
                                         <label className="form-check-label">{p.name}</label>
                                     </div>

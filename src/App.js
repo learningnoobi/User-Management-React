@@ -13,6 +13,8 @@ import UserEdit from './private/users/UserEdit';
 import Roles from './private/roles/Roles';
 import EditRoles from './private/roles/EditRoles';
 import CreateRoles from './private/roles/CreateRoles';
+import Products from './private/products/Products';
+import EditProducts from './private/products/EditProducts';
 
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
           <Route path="/roles/create" exact component={CreateRoles} />
           <Route path="/roles/:id/edit" exact component={EditRoles} />
           <Route path="/" exact component={RedirectToDashboard} />
+          <Route path="/products" exact component={Products} />
+          <Route path="/products/:id/edit" exact component={EditProducts} />
           <Route path="*" component={NotFound} />
 
         </Switch>

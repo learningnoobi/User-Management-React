@@ -28,8 +28,8 @@ const Login = () => {
             }
         }
         catch (err) {
-            console.log(err)
-            setFormerror("Username or password is incorrect !")
+            console.log(err.response.data)
+            setFormerror(err.response.data.detail)
         }
     }
     const { email, password } = values;
