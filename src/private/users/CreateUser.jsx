@@ -1,0 +1,104 @@
+import React, { useState, useEffect } from "react"
+import { Link, useHistory } from "react-router-dom"
+import '../../public/Public.css'
+import axios from "axios"
+import useForm from "../../useForm"
+import Wrapper from "../Wrapper"
+
+
+
+const CreateUser = () => {
+
+    const [values, handleChange] = useForm()
+    const [roles, setRoles] = useState([])
+    const [inputRole, setinputRole] = useState('')
+
+    let history = useHistory()
+    const { firstname, lastname, email } = values
+
+    const disabled =
+        !email?.length ||
+        !firstname?.length ||
+        !lastname?.length ||
+        inputRole.length === 0;
+
+    useEffect(() => {
+        const getroles = async () => {
+            const response = await axios.get('/api/roles/')
+            setRoles(response.data.results)
+        }
+        getroles()
+        // setRoles(response)
+    }, [])
+
+    //Create User and redirect to user list
+    const submitForm = async (e) => {
+
+        e.preventDefault();
+        const url = 'api/users/'
+        try {
+            await axios.post(url, {
+                first_name: firstname,
+                last_name: lastname,
+                email: email,
+                role: inputRole
+            })
+            history.push('/users')
+        }
+        catch (err) {
+            console.log(err)
+        }
+
+    }
+    return (
+        <Wrapper>
+            <form onSubmit={submitForm} className="form-signin my-3">
+                <h1 className="h3 mb-3 font-weight-normal">Create User</h1>
+
+                <input
+                    value={firstname || ""}
+                    name="firstname"
+                    onChange={handleChange}
+                    type="text" className="form-control my-2" placeholder="First Name" required autoFocus />
+
+
+                <input
+                    value={lastname || ""}
+                    name="lastname"
+                    onChange={handleChange}
+                    type="text" className="form-control my-2" placeholder="Last  Name" required />
+
+
+                <input
+                    value={email || ""}
+                    name="email"
+                    onChange={handleChange}
+                    type="email" className="form-control my-2" placeholder="Email address" required />
+
+
+
+                <select className="form-control" aria-label="Default select example"
+                    onChange={(e) => setinputRole(parseInt(e.target.value))}
+                >
+                    {roles.map(role => {
+                        return (
+                            <option key={role.id} value={role.id}>{role.name}</option>
+                        )
+                    })}
+                </select>
+
+
+
+
+                <button disabled={disabled} className="btn btn-lg btn-primary btn-block" type="submit">Create User</button>
+                <p>
+                    <Link to="/users">
+                        <span className="nav-a mx-3 my-3 home">To Users</span>
+                    </Link>
+                </p>
+            </form>
+        </Wrapper>
+    )
+}
+
+export default CreateUser

@@ -13,23 +13,30 @@ const Login = () => {
 
     const submitLogin = async (e) => {
         e.preventDefault();
-        const url = 'http://127.0.0.1:8000/api/login/'
+        const url = 'api/login/'
+
         try {
-            await axios.post(url, {
+            let a = await axios.post(url, {
                 email: email,
                 password: password,
             })
-            history.push('/')
+            if (a.status === 200) {
+                history.push('/')
+            }
+            else {
+                throw new Error("error ")
+            }
         }
         catch (err) {
-            setFormerror(err.response.data.detail)
+            console.log(err)
+            setFormerror("Username or password is incorrect !")
         }
     }
     const { email, password } = values;
     const disabled =
         !email?.length ||
         !password?.length;
-    console.log(disabled)
+
     return (
         <form onSubmit={submitLogin} className="form-signin my-3">
             <h1 className="h3 mb-3 font-weight-normal">Please Log In</h1>

@@ -1,8 +1,14 @@
-import { Link } from "react-router-dom"
-
+import { Link, useHistory } from "react-router-dom"
+import axios from "axios"
 
 
 const Nav = () => {
+    let history = useHistory()
+    const logout = async (e) => {
+        await axios.post('/api/logout/', {})
+        history.push('/login')
+        console.log('logged out')
+    }
 
     return (
 
@@ -15,6 +21,9 @@ const Nav = () => {
                     <Link to="/register">
                         <span className="nav-a mx-3" >Register</span>
                     </Link>
+
+                    <button onClick={logout}
+                        className="btn btn-danger nav-a mx-3" >Logout</button>
                 </li>
             </ul>
         </nav>
