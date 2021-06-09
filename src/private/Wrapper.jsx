@@ -12,7 +12,7 @@ const Wrapper = (props) => {
         async function fetchUser() {
             try {
                 let response = await axios.get('/api/currentuser')
-                console.log(response)
+                // console.log(response)
             }
             catch {
 

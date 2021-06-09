@@ -2,17 +2,21 @@ import React from 'react'
 import Wrapper from '../Wrapper'
 import { useEffect, useState } from 'react'
 import axios from "axios"
-
+import { useHistory } from "react-router-dom"
 const CreateRoles = () => {
     const [perm, setPerm] = useState([])
     const [inputPerm, setInputPerm] = useState([])
     const [roleName, setRoleName] = useState('')
+    let history = useHistory()
+
+
     useEffect(() => {
         const fetchPermissions = async () => {
             const response = await axios.get('api/permissions/')
             const res = response.data.results
             console.log(res)
             setPerm(res)
+
         }
         fetchPermissions()
     }, [])
@@ -23,6 +27,7 @@ const CreateRoles = () => {
             name: roleName,
             permissions: inputPerm
         })
+        history.push('/roles')
         console.log(response)
     }
     return (
