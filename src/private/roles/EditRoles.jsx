@@ -2,6 +2,7 @@ import { useParams, useHistory } from "react-router-dom"
 import { useEffect, useState } from 'react'
 import axios from "axios"
 import Wrapper from "../Wrapper"
+import { Link } from "react-router-dom"
 
 const EditRoles = () => {
     const { id } = useParams()
@@ -100,7 +101,8 @@ const EditRoles = () => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-info">Save</button>
+                <button className="btns edit float-left mx-2"><i className="fa fa-save"></i> Save</button>
+                <Link to="/roles"><button className="btns delete float-left mx-1"> Cancel</button></Link>
             </form>
         </Wrapper>
     )

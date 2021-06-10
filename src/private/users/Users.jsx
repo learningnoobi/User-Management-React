@@ -51,9 +51,9 @@ const Users = () => {
         <Wrapper>
 
             <Link to="/users/create">
-                <button className="btn btn-info">Add</button>
+                <button className="btns edit">Add User</button>
             </Link>
-            <div className="table-responsive mt-2">
+            <div className="table-responsive  mt-2">
                 <table className="table table-striped table-sm">
                     <thead>
                         <tr>
@@ -77,7 +77,7 @@ const Users = () => {
                                         {user.role ? <td>{user.role.name} </td> : <td>No role</td>}
                                         <td>
                                             <div className="btn-group mr-2">
-                                                <Link to={`/usres/${user.id}/edit`}> <button className="btn btn-info mx-1">Edit</button></Link>
+                                                <Link to={`/users/${user.id}/edit`}> <button className="btns edit mx-1">Edit</button></Link>
 
                                                 <Deleter id={user.id} endpoint={'api/users'} handleDelete={handleDelete} />
                                             </div>

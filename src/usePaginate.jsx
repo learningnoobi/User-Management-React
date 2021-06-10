@@ -14,7 +14,7 @@ const usePaginate = () => {
         setPage(prev => prev - 1)
     }
 
-    return { page, setPage, next_page, setnext_page, prev_page, setPrev_page, next, prev }
+    return { page, setnext_page, setPrev_page, next, prev }
 }
 
 export default usePaginate

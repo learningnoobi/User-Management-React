@@ -35,9 +35,9 @@ const Roles = () => {
     return (
         <Wrapper>
             <Link to="/roles/create">
-                <button className="btn btn-secondary float-left my-2">Add Role</button>
+                <button className="btns edit my-2">Add Role</button>
             </Link >
-            <div className="table-responsive my-4">
+            <div className="table-responsive  my-1">
                 <table className="table table-striped table-sm">
                     <thead>
                         <tr>
@@ -54,7 +54,7 @@ const Roles = () => {
                                     <td>{role.name}</td>
                                     <td>
                                         <div className="btn-group mr-2">
-                                            <Link to={`/roles/${role.id}/edit`}> <button className="btn btn-info mx-1">Edit</button></Link>
+                                            <Link to={`/roles/${role.id}/edit`}> <button className="btns edit mx-1">Edit</button></Link>
 
                                             <Deleter id={role.id} endpoint={'api/roles'} handleDelete={handleDelete} />
                                         </div>

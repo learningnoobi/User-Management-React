@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Link, useHistory } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 import '../../public/Public.css'
 import axios from "axios"
 import useForm from "../../useForm"
@@ -52,7 +52,7 @@ const CreateUser = () => {
     }
     return (
         <Wrapper>
-            <form onSubmit={submitForm} className="form-signin my-3">
+            <form onSubmit={submitForm} className="col-lg-6 col-sm-10 m-auto">
                 <h1 className="h3 mb-3 font-weight-normal">Create User</h1>
 
                 <input
@@ -79,25 +79,18 @@ const CreateUser = () => {
 
                 <select className="form-control" aria-label="Default select example"
                     onChange={(e) => setinputRole(parseInt(e.target.value))}
-                >
+                >   <option value="" >------- </option>
                     {roles.map(role => {
                         return (
                             <option key={role.id} value={role.id}>{role.name}</option>
                         )
                     })}
                 </select>
+                <button disabled={disabled} className="mt-2 btn btn-lg btn-primary btn-block" type="submit">Create User</button>
+                <Link to="/users"><button className="my-1 btns delete float-left mx-1"> Go Back</button></Link>
 
-
-
-
-                <button disabled={disabled} className="btn btn-lg btn-primary btn-block" type="submit">Create User</button>
-                <p>
-                    <Link to="/users">
-                        <span className="nav-a mx-3 my-3 home">To Users</span>
-                    </Link>
-                </p>
             </form>
-        </Wrapper>
+        </Wrapper >
     )
 }
 

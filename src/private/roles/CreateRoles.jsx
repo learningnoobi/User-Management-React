@@ -2,11 +2,12 @@ import React from 'react'
 import Wrapper from '../Wrapper'
 import { useEffect, useState } from 'react'
 import axios from "axios"
-import { useHistory } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 const CreateRoles = () => {
     const [perm, setPerm] = useState([])
     const [inputPerm, setInputPerm] = useState([])
     const [roleName, setRoleName] = useState('')
+    const [formerror, setFormerror] = useState('')
     let history = useHistory()
 
 
@@ -23,22 +24,30 @@ const CreateRoles = () => {
 
     const submit = async (e) => {
         e.preventDefault()
-        const response = await axios.post('api/roles/', {
-            name: roleName,
-            permissions: inputPerm
-        })
-        history.push('/roles')
-        console.log(response)
+        try {
+            const response = await axios.post('api/roles/', {
+                name: roleName,
+                permissions: inputPerm
+            })
+            history.push('/roles')
+            console.log(response)
+        }
+        catch (err) {
+            console.log(err.response.data)
+            setFormerror(err.response.data.name)
+        }
     }
     return (
         <Wrapper>
             <form onSubmit={submit}>
-                <div className="form-group row">
+                <h4 className="text-center">Create Role</h4>
+                <div className="mt-2 form-group row">
                     <label htmlFor="name" className="col-sm-2 col-form-label">Name</label>
                     <div className="col-sm-10">
-                        <input type="text" className="form-control" name="name" id="name"
-                            onChange={e => setRoleName(e.target.value)}
+                        <input type="text" className="form-control" name="name"
+                            onChange={e => setRoleName(e.target.value)} autoFocus
                         />
+                        <p className="error-msg"> {formerror}</p>
                     </div>
                 </div>
 
@@ -62,7 +71,8 @@ const CreateRoles = () => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-info">Save</button>
+                <button className="btns edit float-left mx-2"><i className="fa fa-save"></i> Save</button>
+                <Link to="/roles"><button className="btns delete float-left mx-1"> Go Back</button></Link>
             </form>
         </Wrapper>
     )

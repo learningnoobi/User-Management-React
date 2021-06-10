@@ -19,7 +19,7 @@ const Deleter = ({ id, endpoint, handleDelete }) => {
     return (
         <div>
             <button onClick={() => deleter(id)}
-                className="btn btn-danger mx-1">Delete</button>
+                className="btns delete mx-1"><i className="fa fa-trash"></i> </button>
         </div>
     )
 }

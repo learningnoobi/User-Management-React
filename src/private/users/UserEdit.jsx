@@ -3,6 +3,7 @@ import Wrapper from '../Wrapper'
 import { useParams, Link, useHistory } from "react-router-dom";
 import axios from "axios"
 import useForm from "../../useForm"
+import EditSuccess from '../../components/EditSuccess';
 
 const UserEdit = () => {
     const { id } = useParams()
@@ -11,12 +12,11 @@ const UserEdit = () => {
     const [lastname, setLastname] = useState('')
     const [email, setEmail] = useState('')
 
+    const [success, setSuccess] = useState('')
     const [roles, setRoles] = useState([])
     const [inputRole, setinputRole] = useState('')
     const [formerror, setFormerror] = useState(null)
     let history = useHistory()
-
-
 
     useEffect(() => {
         const getroles = async () => {
@@ -35,19 +35,26 @@ const UserEdit = () => {
         getroles()
 
         // setRoles(response)
-    }, [])
+    }, [id])
+
+
+
     const submitForm = async (e) => {
         e.preventDefault()
-        axios.patch(`api/users/${id}/`, {
+        await axios.put(`api/users/${id}/`, {
             first_name: firstname,
             last_name: lastname,
             email: email,
             role: inputRole
         })
+        // history.push('/users')
+        setSuccess("Successfully Edited !")
     }
     return (
         <Wrapper>
-            Edit user - {id}
+            {success.length > 0 &&
+                <EditSuccess success={success} setSuccess={setSuccess} />
+            }
             <form onSubmit={submitForm} className="form-signin my-3">
                 <h1 className="h3 mb-3 font-weight-normal">Edit User</h1>
 
@@ -87,12 +94,9 @@ const UserEdit = () => {
 
 
                 <p className="error-msg">{formerror}</p>
-                <button className="btn btn-lg btn-primary btn-block" type="submit">Edit User</button>
-                <p>
-                    <Link to="/users">
-                        <span className="nav-a mx-3 my-3 home">To Users</span>
-                    </Link>
-                </p>
+                <button className="btns edit float-left mx-2"><i className="fa fa-save"></i> Save</button>
+                <Link to="/users"><button className="btns delete float-left mx-1"> Go Back</button></Link>
+
             </form>
         </Wrapper>
 

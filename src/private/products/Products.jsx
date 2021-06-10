@@ -31,7 +31,10 @@ const Products = () => {
 
     return (
         <Wrapper>
-            <div className="table-responsive my-4">
+            <Link to="/products/create">
+                <button className="btns edit float-left">Add Product</button>
+            </Link>
+            <div className="table-responsive my-5">
                 <table className="table table-striped table-sm">
                     <thead>
                         <tr>
@@ -49,13 +52,13 @@ const Products = () => {
                             return (
                                 <tr key={pro.id}>
                                     <td>{pro.id}</td>
-                                    <td><img src={pro.image} alt="img" height="50" width="90" /></td>
+                                    <td><img src={pro.image} alt="img" className="product_img" /></td>
                                     <td>{pro.title}</td>
                                     <td>{pro.description}</td>
                                     <td>{pro.price}</td>
                                     <td>
                                         <div className="btn-group mr-2">
-                                            <Link to={`/products/${pro.id}/edit`}> <button className="btn btn-info mx-1">Edit</button></Link>
+                                            <Link to={`/products/${pro.id}/edit`}> <button title="Edit" className="btns edit mx-1">Edit</button></Link>
 
                                             <Deleter id={pro.id} endpoint={'pro/products'} handleDelete={handleDelete} />
                                         </div>

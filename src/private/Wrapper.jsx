@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom"
 
 const Wrapper = (props) => {
     const [redirect, setRedirect] = useState(false)
+    const [menu, setMenu] = useState("none")
     let history = useHistory()
 
     useEffect(() => {
@@ -24,15 +25,25 @@ const Wrapper = (props) => {
         history.push('/login')
     }
 
+    const menuChange = () => {
+        if (menu === "none") {
+            setMenu("block")
+        }
+        if (menu === "block") {
+            setMenu("none")
+        }
+
+
+    }
     return (
 
         <>
 
-            <Nav />
+            <Nav menuChange={menuChange} />
 
             <div className="container-fluid">
                 <div className="row">
-                    <Menu />
+                    <Menu menu={menu} />
 
                     <main role="main" className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
                         {props.children}
