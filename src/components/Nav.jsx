@@ -21,12 +21,10 @@ const Nav = ({ menuChange }) => {
             <ul className="navbar-nav px-3">
 
                 <li className="nav-item form-inline p-2">
-                    <Link to="/login">
-                        <span className="nav-a mx-3" >Log In</span>
+                    <Link to="/profile">
+                        <span className="nav-a mx-3" >Profile</span>
                     </Link>
-                    <Link to="/register">
-                        <span className="nav-a mx-3" >Register</span>
-                    </Link>
+
 
                     <button onClick={logout}
                         className="btn btn-danger nav-a mx-3" >Logout</button>

@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { Link, useHistory } from "react-router-dom"
 import './Public.css'
 import axios from "axios"
 import useForm from "../useForm"
+import { GlobalContext } from "../Global"
 
 
 const Register = () => {
@@ -12,6 +13,11 @@ const Register = () => {
     let history = useHistory()
     const { firstname, lastname, email, password, password_confirm } = values
 
+    const { authenticated } = useContext(GlobalContext)
+    console.log(authenticated)
+    if (authenticated) {
+        history.push('/dashboard')
+    }
 
     const submitForm = async (e) => {
 
@@ -34,7 +40,7 @@ const Register = () => {
     }
     return (
         <form onSubmit={submitForm} className="form-signin my-3">
-            <h1 className="h3 mb-3 font-weight-normal">Please Register</h1>
+            <h1 className="h4 mb-3 btns delete">Please Register</h1>
 
             <input
                 value={firstname || ""}
@@ -68,14 +74,14 @@ const Register = () => {
                 value={password_confirm || ""}
                 name="password_confirm"
                 onChange={handleChange}
-                type="password" className="form-control" placeholder="Confirm Password" required />
+                type="password" className="form-control mt-2" placeholder="Confirm Password" required />
 
 
             <p className="error-msg">{formerror}</p>
             <button disabled={disabled} className="btn btn-lg btn-primary btn-block" type="submit">Register</button>
             <p>
-                <Link to="/">
-                    <span className="nav-a mx-3 my-3 home">Go Home</span>
+                <Link to="/login">
+                    <button className="btns edit nav-a mx-3 my-3 home ">Already Have Account? Login</button>
                 </Link>
             </p>
         </form>

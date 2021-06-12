@@ -37,8 +37,10 @@ body{
   object-fit:cover;
 }
 .sidebar{
-  height: 100vh;
-  background-color: #11101d;
+  height: 100%;
+  position: fixed;
+  background-color: #171627;
+  z-index: 89;
 }
 .sidebar a{
   color: white;
@@ -56,7 +58,7 @@ body{
 }
 .input-div{
   position: relative;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 .search-icon{
   position: absolute;
@@ -66,7 +68,7 @@ body{
   color: white;
 }
 .input-search{
- width: 100%;
+ width: 60%;
  background-color: #22213b;
  border: none;
  padding:10px 30px;
@@ -128,14 +130,75 @@ i{
   right:10px;
   bottom: 20px;
 }
+.cards{
+  background-color: #2f2d4e;
+  color: whitesmoke;
+}
+.form-edit{
+  position:relative;
+  margin-top: 20px;
+}
+a{
+  color:white;
+}
+a:hover{
+  text-decoration: none;
+  color: wheat;
+}
+.total{
+  color: white;
+  padding: 20px;
+
+}
+.total:first-child{
+  background: blueviolet;
+}
+.total:nth-child(2){
+  background: rgb(199, 13, 216);
+}
+.total:last-child{
+  background: rgb(230, 9, 101);
+}
+
+.total h3{
+  font-weight: 1000;
+  color: #e9e7fd;
+  font-family: var(--monst);
+}
+
+.notfound{
+  display: flex;
+  height: 100vh;
+  font-family: var(--noto);
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.four{
+  font-size: 250px;
+  font-family: var(--noto);
+  font-weight: 700;
+  color: rgb(235, 18, 108);
+
+}
+.notfound h2{
+  color: #292647;
+  font-size: 40px;
+  font-weight: 600;
+}
 
 @media only screen and (max-width: 830px) {
   .sidebar{
     height: auto;
     padding-bottom: 20px;
+    
   }
   .bars{
     display: block;
   }
+  .input-search{
+    width: 100%;
+   
+   }
 
 }

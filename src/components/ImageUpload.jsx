@@ -11,7 +11,7 @@ const ImageUpload = ({ value, imageChanged }) => {
         const response = await axios.post('pro/upload/', data)
         console.log(response)
 
-        imageChanged(response.data.url)
+        imageChanged(response.data.data.url)
     }
     return (
         <>

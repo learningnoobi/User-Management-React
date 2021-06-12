@@ -52,7 +52,7 @@ const CreateUser = () => {
     }
     return (
         <Wrapper>
-            <form onSubmit={submitForm} className="col-lg-6 col-sm-10 m-auto">
+            <form onSubmit={submitForm} className="form-signin my-3">
                 <h1 className="h3 mb-3 font-weight-normal">Create User</h1>
 
                 <input
@@ -76,16 +76,17 @@ const CreateUser = () => {
                     type="email" className="form-control my-2" placeholder="Email address" required />
 
 
-
-                <select className="form-control" aria-label="Default select example"
+                <select value={inputRole} className="form-control" aria-label="Default select example"
                     onChange={(e) => setinputRole(parseInt(e.target.value))}
-                >   <option value="" >------- </option>
+                >
+                    <option>---Select Role---</option>
                     {roles.map(role => {
                         return (
                             <option key={role.id} value={role.id}>{role.name}</option>
                         )
                     })}
                 </select>
+
                 <button disabled={disabled} className="mt-2 btn btn-lg btn-primary btn-block" type="submit">Create User</button>
                 <Link to="/users"><button className="my-1 btns delete float-left mx-1"> Go Back</button></Link>
 

@@ -9,21 +9,34 @@ const Wrapper = (props) => {
     const [menu, setMenu] = useState("none")
     let history = useHistory()
 
+    const [permission, setPermission] = useState('')
     useEffect(() => {
         async function fetchUser() {
             try {
-                await axios.get('/api/currentuser')
-                // console.log(response)
+                const response = await axios.get('/api/currentuser')
+                setPermission(response.data.data.role.permissions)
+
             }
             catch {
                 setRedirect(true)
             }
         }
         fetchUser()
+
     }, [])
+
     if (redirect) {
         history.push('/login')
     }
+
+    const canView = (page) => {
+        if (permission.length > 0) {
+            return permission.some(p => p.name === `view_${page}`);
+        }
+
+    }
+
+
 
     const menuChange = () => {
         if (menu === "none") {
@@ -35,6 +48,7 @@ const Wrapper = (props) => {
 
 
     }
+
     return (
 
         <>
@@ -43,7 +57,7 @@ const Wrapper = (props) => {
 
             <div className="container-fluid">
                 <div className="row">
-                    <Menu menu={menu} />
+                    <Menu menu={menu} canView={canView} />
 
                     <main role="main" className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
                         {props.children}
@@ -53,5 +67,6 @@ const Wrapper = (props) => {
         </>
     )
 }
+
 
 export default Wrapper

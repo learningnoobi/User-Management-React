@@ -1,16 +1,17 @@
 
 import axios from "axios"
 import { Link, useHistory } from "react-router-dom"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Wrapper from "../Wrapper"
 import Paginator from "../../components/Paginator"
 import Deleter from "../../components/Deleter"
 import usePaginate from "../../usePaginate"
+import { GlobalContext } from "../../Global"
 
 const Users = () => {
 
     const [loading, setLoading] = useState(true)
-
+    const [search, setSearch] = useState('')
     const [users, setUsers] = useState([])
     const { page,
         setnext_page,
@@ -18,31 +19,54 @@ const Users = () => {
         next, prev } = usePaginate()
 
     let history = useHistory()
-
+    const { canEdit } = useContext(GlobalContext)
     useEffect(() => {
+        let debouncer;
         try {
-            const userFetch = async () => {
-                let response = await axios.get(`/api/users?page=${page}`)
+            const userFetch = async (url) => {
+                let response = await axios.get(url)
                 setLoading(false)
-                console.log(response.data)
+                // console.log(response.data)
                 let res = response.data
                 setUsers(res.data)
                 setnext_page(res.meta.next)
                 setPrev_page(res.meta.previous)
             }
-            userFetch()
-        }
-        catch (err) {
-            history.push('/login')
+            if (search) {
+                clearTimeout(debouncer)
+                debouncer = setTimeout(() => {
+                    userFetch(`api/users/?keyword=${search}`)
+                }, 1000)
+            }
+            else {
+                userFetch(`api/users?page=${page}`)
+            }
+
         }
 
-    }, [page, setPrev_page, setnext_page, history])
+        catch (err) {
+            console.log('sadf')
+            console.log(err.response)
+            setLoading(false)
+        }
+    }, [page, setPrev_page, setnext_page, history, search])
 
     //deleting user
     const handleDelete = async (id) => {
         setUsers(users.filter(user => user.id !== id))
     }
 
+    const actions = (id) => {
+        if (canEdit('users')) {
+            return (
+                <div className="btn-group mr-2">
+                    <Link to={`/users/${id}/edit`}> <button className="btns edit mx-1">Edit</button></Link>
+
+                    <Deleter id={id} endpoint={'api/users'} handleDelete={handleDelete} />
+                </div>
+            )
+        }
+    }
 
 
 
@@ -52,7 +76,11 @@ const Users = () => {
 
             <Link to="/users/create">
                 <button className="btns edit">Add User</button>
-            </Link>
+            </Link><br />
+            <div className="input-div">
+                <i className="fa fa-search search-icon"></i>
+                <input onChange={e => setSearch(e.target.value)} placeholder="Search ..." type="text" className="input-search" />
+            </div>
             <div className="table-responsive  mt-2">
                 <table className="table table-striped table-sm">
                     <thead>
@@ -76,11 +104,7 @@ const Users = () => {
                                         <td>{user.email} </td>
                                         {user.role ? <td>{user.role.name} </td> : <td>No role</td>}
                                         <td>
-                                            <div className="btn-group mr-2">
-                                                <Link to={`/users/${user.id}/edit`}> <button className="btns edit mx-1">Edit</button></Link>
-
-                                                <Deleter id={user.id} endpoint={'api/users'} handleDelete={handleDelete} />
-                                            </div>
+                                            {actions(user.id)}
                                         </td>
                                     </tr>
                                 )

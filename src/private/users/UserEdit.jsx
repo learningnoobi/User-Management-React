@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Wrapper from '../Wrapper'
 import { useParams, Link, useHistory } from "react-router-dom";
 import axios from "axios"
-import useForm from "../../useForm"
 import EditSuccess from '../../components/EditSuccess';
 
 const UserEdit = () => {
